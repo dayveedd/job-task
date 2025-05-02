@@ -14,11 +14,14 @@ class QuoteRepository {
       );
       final data = response.data;
       final List quotesJson = data['results'];
+      // for logging response
       print(response);
       return quotesJson.map((json) => QuoteModel.fromJson(json)).toList();
     } on DioException catch (e) {
+      // for logging any error encountered
       print(e.error);
       print(e.response);
+      // bloc goes to the error state and displays the error page for refreshing
       throw Exception('Failed to get quotes: ${e.response}');
     }
   }

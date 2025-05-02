@@ -32,6 +32,7 @@ class _DataPageState extends State<DataPage> {
         },
       ),
     )
+    // I had to bypass certificate verification because dio couldn't verify the SSL certificate. this is unsafe for production
       ..httpClientAdapter = DefaultHttpClientAdapter()
       ..interceptors.add(
         InterceptorsWrapper(
@@ -51,7 +52,8 @@ class _DataPageState extends State<DataPage> {
           (X509Certificate cert, String host, int port) => true;
       return client;
     };
-
+    
+    // an instance of the ploc provider to wrap the UI with bloc combining both the UI and API logic together
     return BlocProvider(
       create: (_) =>
           QuoteBloc(repository: QuoteRepository(dio))..add(FetchQuotes()),
@@ -80,7 +82,8 @@ class _DataPageState extends State<DataPage> {
               return ErrorPage();
             } else if (quoteState is QuoteLoaded) {
               final quotes = quoteState.quotes;
-
+             
+             // using a listview builder to display the API response dynamically on the page
               return SafeArea(
                 child: RefreshIndicator(
                   onRefresh: () async {

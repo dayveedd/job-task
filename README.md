@@ -1,6 +1,6 @@
 # job_task
 
-A new Flutter project.
+Flutter mobile screen that fetches a list of AI-generated quotes and displays them nicely
 
 ## Getting Started
 
